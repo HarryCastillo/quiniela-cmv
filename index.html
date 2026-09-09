@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dabo — Quiniela 2026</title>
-<meta name="description" content="Dabo, quiniela de la temporada 2026. Regístrate para pronosticar los resultados de cada partido.">
+<title>Quiniela CMV — Temporada 2026</title>
+<meta name="description" content="Quiniela CMV, temporada 2026. Regístrate para pronosticar los resultados de cada partido.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏈</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1047,7 +1047,7 @@
 </head>
 <body>
   <header>
-    <div class="header-logo">Da<span class="accent">bo</span></div>
+    <div class="header-logo">C<span class="accent">MV</span></div>
     <div class="user-badge" id="userBadge" onclick="toggleUserMenu()">
       <div class="user-avatar" id="userAvatar"></div>
       <span id="userBadgeNombre"></span>
@@ -1076,8 +1076,8 @@
         <div class="form-view active" id="vista-inicio">
           <div class="hero-inicio">
           <div class="brand-icon" aria-hidden="true">🏈</div>
-          <p class="eyebrow">Quiniela Dabo</p>
-          <h1>Da<span class="accent">bo</span></h1>
+          <p class="eyebrow">Quiniela CMV</p>
+          <h1>C<span class="accent">MV</span></h1>
           <div class="season">Temporada <b>2026</b></div>
           <p class="lead">Pronostica el resultado de cada partido de la temporada regular y los playoffs, hasta la gran final.</p>
           <p class="sub">Arranque de temporada: 9 de septiembre de 2026.</p>
@@ -1173,24 +1173,29 @@
           <div class="reglas-content">
 
             <h3>Descripción general</h3>
-            <p>Dabo es un predictor privado para la temporada regular (18 semanas) y los playoffs completos, desde el arranque de temporada (9 de septiembre de 2026) hasta la gran final. El registro requiere verificar tu correo antes de quedar activo.</p>
+            <p>Quiniela CMV es un predictor privado para colaboradores de CMV, durante la temporada regular (18 semanas) y los playoffs completos, desde el arranque de temporada (9 de septiembre de 2026) hasta la gran final. El registro requiere verificar tu correo antes de quedar activo.</p>
 
             <h3>Mecánica de juego</h3>
             <p>En cada partido pronosticas solo el resultado: gana el local, empate o gana el visitante. No se pronostica el marcador.</p>
-            <p>El sistema cierra la captura de toda la semana una hora antes de que arranque el primer partido con horario confirmado (normalmente el juego del jueves). A partir de ese momento quedan cerrados todos los partidos de esa semana al mismo tiempo, aunque alguno se juegue después por cambio de horario. Puedes modificar tu pronóstico cuantas veces quieras antes del cierre.</p>
+            <p>La captura se cierra por semana completa, no por partido: todos los partidos de una misma semana (o ronda de playoffs) cierran juntos, 5 minutos antes del primer partido confirmado de esa semana. Puedes modificar tu pronóstico cuantas veces quieras antes del cierre.</p>
             <p>El resultado se toma al término del partido, incluyendo tiempo extra si lo hay.</p>
 
             <h3>Sistema de puntuación</h3>
+            <p>Cada acierto vale más entre más avanzan los playoffs:</p>
             <div class="tabla-wrap">
               <table>
-                <tr><th>Concepto</th><th>Puntos</th></tr>
-                <tr><td>Resultado correcto (local, empate o visitante)</td><td class="num">1 pt</td></tr>
+                <tr><th>Fase</th><th>Puntos por acierto</th></tr>
+                <tr><td>Temporada regular</td><td class="num">1 pt</td></tr>
+                <tr><td>Wild Card</td><td class="num">2 pts</td></tr>
+                <tr><td>Divisional</td><td class="num">3 pts</td></tr>
+                <tr><td>Campeonato de Conferencia</td><td class="num">4 pts</td></tr>
+                <tr><td>Gran Final</td><td class="num">5 pts</td></tr>
               </table>
             </div>
-            <p>En caso de empate en puntos, la tabla general se desempata así: primero gana quien haya terminado en solitario en el primer lugar de más semanas (sin compartirlo con nadie); si el empate persiste, se compara el puntaje de la semana más reciente jugada, y de seguir empatado se revisa semana por semana hacia atrás. Si el empate continúa después de esto, la posición se resuelve de forma manual, mediante sorteo realizado por RH.</p>
+            <p>En caso de empate en la tabla general, se desempata en este orden: 1) puntos totales, 2) semanas ganadas en solitario (semanas donde tuviste el puntaje más alto sin empatar con nadie más), 3) puntos de la semana más reciente jugada, y así hacia atrás hasta romper el empate. Si el empate persiste, se resuelve al cierre de temporada.</p>
 
             <h3>Modelo de acceso</h3>
-            <p><em>Pendiente de definir el modelo de pago/precio para esta quiniela.</em></p>
+            <p>La participación no tiene costo para colaboradores de CMV.</p>
 
             <p class="contacto">Dudas o aclaraciones: avisos.quiniela@gmail.com<br>Al registrarte, declaras haber leído y aceptado en su totalidad estas reglas.</p>
 
@@ -1277,9 +1282,9 @@
 
   <script>
     (function(){
-      // Tenant por hash de URL (#dabo, #demo, etc). Sin hash, cae en
-      // "dabo" — el link de siempre para participantes reales no cambia.
-      var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
+      // Tenant por hash de URL (#cmv, #demo, etc). Sin hash, cae en
+      // "cmv" — el link de siempre para participantes reales no cambia.
+      var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
       var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
       var URL_REGISTRO = BASE_URL + 'registrarUsuarioNFL';
       var URL_LOGIN = BASE_URL + 'loginNFL';
@@ -1305,7 +1310,7 @@
         var btnConfirmar = document.getElementById('btnConfirmarBaja');
         var btnCancelar = document.getElementById('btnCancelarBaja');
         texto.innerHTML = '¿Confirmas que ya no quieres recibir correos ' +
-          'de Dabo?<br><strong style="color:var(--text)">' +
+          'de CMV?<br><strong style="color:var(--text)">' +
           correoBaja + '</strong>';
         modal.classList.add('open');
         btnCancelar.addEventListener('click', function(){
