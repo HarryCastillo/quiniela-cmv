@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiniela CMV — Temporada 2026</title>
-<meta name="description" content="Quiniela CMV, quiniela de la temporada 2026. Regístrate para pronosticar los resultados de cada partido.">
+<title>Dabo — Quiniela 2026</title>
+<meta name="description" content="Dabo, quiniela de la temporada 2026. Regístrate para pronosticar los resultados de cada partido.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏈</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1047,7 +1047,7 @@
 </head>
 <body>
   <header>
-    <div class="header-logo">C<span class="accent">MV</span></div>
+    <div class="header-logo">Da<span class="accent">bo</span></div>
     <div class="user-badge" id="userBadge" onclick="toggleUserMenu()">
       <div class="user-avatar" id="userAvatar"></div>
       <span id="userBadgeNombre"></span>
@@ -1076,8 +1076,8 @@
         <div class="form-view active" id="vista-inicio">
           <div class="hero-inicio">
           <div class="brand-icon" aria-hidden="true">🏈</div>
-          <p class="eyebrow">Quiniela CMV</p>
-          <h1>C<span class="accent">MV</span></h1>
+          <p class="eyebrow">Quiniela Dabo</p>
+          <h1>Da<span class="accent">bo</span></h1>
           <div class="season">Temporada <b>2026</b></div>
           <p class="lead">Pronostica el resultado de cada partido de la temporada regular y los playoffs, hasta la gran final.</p>
           <p class="sub">Arranque de temporada: 9 de septiembre de 2026.</p>
@@ -1173,11 +1173,11 @@
           <div class="reglas-content">
 
             <h3>Descripción general</h3>
-            <p>CMV es una quiniela privada para la temporada regular (18 semanas) y los playoffs completos, desde el arranque de temporada (9 de septiembre de 2026) hasta la gran final. El registro requiere verificar tu correo antes de quedar activo.</p>
+            <p>Dabo es un predictor privado para la temporada regular (18 semanas) y los playoffs completos, desde el arranque de temporada (9 de septiembre de 2026) hasta la gran final. El registro requiere verificar tu correo antes de quedar activo.</p>
 
             <h3>Mecánica de juego</h3>
             <p>En cada partido pronosticas solo el resultado: gana el local, empate o gana el visitante. No se pronostica el marcador.</p>
-            <p>El sistema cierra la captura al iniciar cada partido. Puedes modificar tu pronóstico cuantas veces quieras antes del cierre.</p>
+            <p>El sistema cierra la captura de toda la semana una hora antes de que arranque el primer partido con horario confirmado (normalmente el juego del jueves). A partir de ese momento quedan cerrados todos los partidos de esa semana al mismo tiempo, aunque alguno se juegue después por cambio de horario. Puedes modificar tu pronóstico cuantas veces quieras antes del cierre.</p>
             <p>El resultado se toma al término del partido, incluyendo tiempo extra si lo hay.</p>
 
             <h3>Sistema de puntuación</h3>
@@ -1187,7 +1187,7 @@
                 <tr><td>Resultado correcto (local, empate o visitante)</td><td class="num">1 pt</td></tr>
               </table>
             </div>
-            <p><em>Pendiente de definir: el desempate de la tabla general para participantes con el mismo puntaje.</em></p>
+            <p>En caso de empate en puntos, la tabla general se desempata así: primero gana quien haya terminado en solitario en el primer lugar de más semanas (sin compartirlo con nadie); si el empate persiste, se compara el puntaje de la semana más reciente jugada, y de seguir empatado se revisa semana por semana hacia atrás. Si el empate continúa después de esto, la posición se resuelve de forma manual, mediante sorteo realizado por RH.</p>
 
             <h3>Modelo de acceso</h3>
             <p><em>Pendiente de definir el modelo de pago/precio para esta quiniela.</em></p>
@@ -1277,9 +1277,9 @@
 
   <script>
     (function(){
-      // Tenant por hash de URL (#cmv, #demo, etc). Sin hash, cae en
-      // "cmv" — el link de siempre para participantes reales no cambia.
-      var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
+      // Tenant por hash de URL (#dabo, #demo, etc). Sin hash, cae en
+      // "dabo" — el link de siempre para participantes reales no cambia.
+      var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
       var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
       var URL_REGISTRO = BASE_URL + 'registrarUsuarioNFL';
       var URL_LOGIN = BASE_URL + 'loginNFL';
@@ -1305,7 +1305,7 @@
         var btnConfirmar = document.getElementById('btnConfirmarBaja');
         var btnCancelar = document.getElementById('btnCancelarBaja');
         texto.innerHTML = '¿Confirmas que ya no quieres recibir correos ' +
-          'de Quiniela CMV?<br><strong style="color:var(--text)">' +
+          'de Dabo?<br><strong style="color:var(--text)">' +
           correoBaja + '</strong>';
         modal.classList.add('open');
         btnCancelar.addEventListener('click', function(){
