@@ -61,14 +61,18 @@
   }
 
   .header-logo{
-    font-family: 'Anton', sans-serif;
-    font-size: 16px;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--text);
+    display: flex;
+    align-items: center;
   }
 
-  .header-logo .accent{ color: var(--gold); }
+  .header-logo img{
+    height: 30px;
+    width: auto;
+    display: block;
+    background: #fff;
+    border-radius: 6px;
+    padding: 3px 10px;
+  }
 
   .user-badge{
     display: none;
@@ -1047,7 +1051,7 @@
 </head>
 <body>
   <header>
-    <div class="header-logo">C<span class="accent">MV</span></div>
+    <div class="header-logo"><img src="logo-cmv.jpg" alt="Corporación Mexicana de Valuación"></div>
     <div class="user-badge" id="userBadge" onclick="toggleUserMenu()">
       <div class="user-avatar" id="userAvatar"></div>
       <span id="userBadgeNombre"></span>
