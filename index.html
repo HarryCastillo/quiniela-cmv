@@ -176,6 +176,21 @@
 
   h1 .accent{ color: var(--gold); }
 
+  .hero-logo{
+    display: flex;
+    justify-content: center;
+    margin: 4px 0 2px;
+  }
+
+  .hero-logo img{
+    height: 56px;
+    width: auto;
+    display: block;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px 18px;
+  }
+
   .season{
     font-family: 'Space Mono', monospace;
     font-size: clamp(14px, 3vw, 18px);
@@ -514,6 +529,7 @@
 
   @media (max-width: 480px){
     .brand-icon{ font-size: 32px; }
+    .hero-logo img{ height: 44px; padding: 6px 14px; }
     p.lead{ font-size: 16px; }
     .form-body{ padding: 20px 16px 22px; }
   }
@@ -1081,7 +1097,7 @@
           <div class="hero-inicio">
           <div class="brand-icon" aria-hidden="true">🏈</div>
           <p class="eyebrow">Quiniela CMV</p>
-          <h1>C<span class="accent">MV</span></h1>
+          <div class="hero-logo"><img src="logo-cmv.jpg" alt="Corporación Mexicana de Valuación"></div>
           <div class="season">Temporada <b>2026</b></div>
           <p class="lead">Pronostica el resultado de cada partido de la temporada regular y los playoffs, hasta la gran final.</p>
           <p class="sub">Arranque de temporada: 9 de septiembre de 2026.</p>
