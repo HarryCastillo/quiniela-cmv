@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ops — CMV</title>
+<title>Ops — Dabo</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -192,7 +192,7 @@
 </head>
 <body>
 <div class="wrap">
-  <p class="eyebrow">CMV · Panel interno</p>
+  <p class="eyebrow">Dabo · Panel interno</p>
   <h1>Capturar resultados</h1>
 
   <!-- Compuerta de acceso -->
@@ -231,12 +231,12 @@
       <div class="seleccionado-banner" id="bannerSeleccionado"></div>
       <div class="fila-2">
         <div class="campo">
-          <label id="labelLocal">Puntos local</label>
-          <input type="number" id="golesLocal" min="0" max="99" placeholder="0">
-        </div>
-        <div class="campo">
           <label id="labelVisitante">Puntos visitante</label>
           <input type="number" id="golesVisitante" min="0" max="99" placeholder="0">
+        </div>
+        <div class="campo">
+          <label id="labelLocal">Puntos local</label>
+          <input type="number" id="golesLocal" min="0" max="99" placeholder="0">
         </div>
       </div>
       <button class="btn btn-verde" id="btnPrevisualizar">Previsualizar puntos</button>
@@ -330,9 +330,9 @@
 <script>
 (function(){
   // --- Rellenar con las URLs reales despues de desplegar cada función ---
-  // Tenant por hash de URL (#demo, #cmv, etc), mismo patrón que
-  // index.html. Sin hash, cae en "cmv" para no romper el uso diario.
-  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
+  // Tenant por hash de URL (#demo, #dabo, etc), mismo patrón que
+  // index.html. Sin hash, cae en "dabo" para no romper el uso diario.
+  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
   var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
   var URL_GET_PARTIDOS = BASE_URL + 'getPartidosNFL';
   var URL_PREVISUALIZAR = BASE_URL + 'previsualizarResultadoNFL';
@@ -342,7 +342,7 @@
   var URL_ADMIN_NOMBRE = BASE_URL + 'adminNombreNFL';
   var URL_ADMIN_PASSWORD = BASE_URL + 'adminPasswordNFL';
   var URL_ADMIN_BORRAR = BASE_URL + 'adminBorrarNFL';
-  var CLAVE_SESION = 'ops_cmv_admin_secret';
+  var CLAVE_SESION = 'ops_dabo_admin_secret';
 
   var adminSecret = sessionStorage.getItem(CLAVE_SESION) || '';
   var partidoSeleccionado = null;
@@ -424,7 +424,7 @@
   function nombrePartido(p){
     var local = p.local || 'Por definir';
     var visitante = p.visitante || 'Por definir';
-    return local + ' vs ' + visitante;
+    return visitante + ' @ ' + local;
   }
 
   function metaPartido(p){
@@ -532,7 +532,7 @@
     limpiarMensaje('mensajeConfirmar');
     document.getElementById('resumenPreview').innerHTML =
       '<p style="font-size:14px;color:var(--text-2)">Resultado a capturar: <strong style="color:var(--text)">' +
-      textoPick(data.resultado) + '</strong> — ' + data.partido.local + ' vs ' + data.partido.visitante +
+      textoPick(data.resultado) + '</strong> — ' + data.partido.visitante + ' @ ' + data.partido.local +
       ' (' + data.partido.fase + ', ×' + data.partido.multiplicador + ')</p>' +
       '<div class="resumen-stats">' +
         '<div class="resumen-stat"><strong>' + data.totalPronosticos + '</strong>Pronósticos</div>' +
