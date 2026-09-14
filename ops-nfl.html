@@ -332,7 +332,7 @@
   // --- Rellenar con las URLs reales despues de desplegar cada función ---
   // Tenant por hash de URL (#demo, #dabo, etc), mismo patrón que
   // index.html. Sin hash, cae en "dabo" para no romper el uso diario.
-  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
+  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
   var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
   var URL_GET_PARTIDOS = BASE_URL + 'getPartidosNFL';
   var URL_PREVISUALIZAR = BASE_URL + 'previsualizarResultadoNFL';
