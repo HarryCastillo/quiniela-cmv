@@ -592,13 +592,6 @@
 
   .reglas-content td.num{ color: var(--gold); font-weight: 700; }
 
-  .reglas-content .nota-legal{
-    font-size: 11px;
-    line-height: 1.5;
-    color: var(--text-4);
-    margin: 0 0 10px;
-  }
-
   .reglas-content .contacto{
     font-family: 'Space Mono', monospace;
     font-size: 12px;
@@ -607,6 +600,101 @@
     padding-top: 14px;
     border-top: 1px solid var(--border-2);
   }
+
+  /* ---------- Premios ---------- */
+
+  .premios-content{
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+
+  .premios-content h2{
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+
+  .premios-content .intro{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-2);
+    margin: 0 0 20px;
+  }
+
+  .premios-content .podio{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .premios-content .tarjeta{
+    background: var(--panel-1);
+    border: 1px solid var(--border-1);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .premios-content .tarjeta.lugar-1{ border-color: rgba(245,197,24,0.45); background: linear-gradient(180deg, rgba(245,197,24,0.08), var(--panel-1) 60%); }
+  .premios-content .tarjeta.lugar-2{ border-color: rgba(207,216,220,0.35); }
+  .premios-content .tarjeta.lugar-3{ border-color: rgba(205,127,50,0.4); }
+
+  .premios-content .num-lugar{
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    width: 46px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .premios-content .lugar-1 .num-lugar{ color: var(--gold); }
+  .premios-content .lugar-2 .num-lugar{ color: #cfd8dc; }
+  .premios-content .lugar-3 .num-lugar{ color: var(--bronze); }
+
+  .premios-content .monto{
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+  }
+
+  .premios-content .cupon{
+    font-size: 13px;
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+
+  .premios-content .cupon .valor{ color: var(--green-light); font-weight: 600; }
+
+  .premios-content .resto{
+    background: var(--panel-2);
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: 20px;
+  }
+
+  .premios-content .resto .valor{ color: var(--green-light); font-weight: 600; }
+
+  .premios-content .legal{
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--text-4);
+    border-top: 1px solid var(--border-2);
+    padding-top: 14px;
+  }
+
+  .premios-content .legal strong{ color: var(--text-3); }
 
   /* ---------- Inscritos ---------- */
 
@@ -1091,6 +1179,7 @@
     <button class="tab tab-auth" data-target="vista-autenticado" type="button" id="tab-pronosticos" style="display:none">Pronósticos</button>
     <button class="tab" data-target="vista-inscritos" type="button" id="tab-inscritos">Inscritos</button>
     <button class="tab" data-target="vista-reglas" type="button">Reglas</button>
+    <button class="tab" data-target="vista-premios" type="button">Premios</button>
   </div>
 
   <main>
@@ -1221,24 +1310,47 @@
             </div>
             <p>En caso de empate en la tabla general, se desempata en este orden: 1) puntos totales, 2) semanas ganadas en solitario (semanas donde tuviste el puntaje más alto sin empatar con nadie más), 3) puntos de la semana más reciente jugada, y así hacia atrás hasta romper el empate. Si el empate persiste, se resuelve al cierre de temporada.</p>
 
-            <h3>Premios</h3>
-            <p>Los primeros tres lugares de la tabla general al cierre de la Temporada NFL 2026 reciben premio en efectivo más un cupón de descuento en seguro de auto. Del 4º al 30º lugar, cupón de descuento fijo.</p>
-            <div class="tabla-wrap">
-              <table>
-                <tr><th>Lugar</th><th>Premio</th></tr>
-                <tr><td>1º</td><td class="num">$5,000 + cupón $800*</td></tr>
-                <tr><td>2º</td><td class="num">$3,000 + cupón $650*</td></tr>
-                <tr><td>3º</td><td class="num">$1,000 + cupón $550*</td></tr>
-                <tr><td>4º al 30º</td><td class="num">Cupón $500*</td></tr>
-              </table>
-            </div>
-            <p class="nota-legal"><strong>*</strong> Póliza de cobertura amplia, sólo pago anual sin importar que hubiera meses sin intereses, prima total mínima de $8,000, acreditable a la tarjeta bancaria cuyo titular debe ser el ganador con la cual se haya hecho el pago una vez aplicado en el sistema de la aseguradora, emitida solamente a través del agente José Luis Castillo Lara o Enrique Castillo de la Campa en cualquiera de estas aseguradoras pero ninguna otra: GNP, Latinoamericana, ANA, Qualitas, BX+, Atlas y CHUBB. El comprobante de transferencia electrónica o depósito bancario obrará como prueba plena de la entrega del premio. La vigencia del cupón termina el 31 de julio de 2027, en la que debe estar emitida y pagada la póliza.</p>
-
             <h3>Modelo de acceso</h3>
             <p>La participación no tiene costo para colaboradores de CMV.</p>
 
             <p class="contacto">Dudas o aclaraciones: avisos.quiniela@gmail.com<br>Al registrarte, declaras haber leído y aceptado en su totalidad estas reglas.</p>
 
+          </div>
+        </div>
+
+        <!-- Vista: premios -->
+        <div class="form-view" id="vista-premios">
+          <div class="premios-content">
+            <h2>Premios</h2>
+            <p class="intro">Los primeros tres lugares de la tabla general al cierre de la Temporada NFL 2026 reciben premio en efectivo más un cupón de descuento en seguro de auto. Del 4º al 30º lugar, cupón de descuento fijo.</p>
+
+            <div class="podio">
+              <div class="tarjeta lugar-1">
+                <div class="num-lugar">1º</div>
+                <div>
+                  <div class="monto">$5,000 MXN</div>
+                  <div class="cupon">+ cupón de <span class="valor">$800</span> de descuento en seguro de auto*</div>
+                </div>
+              </div>
+              <div class="tarjeta lugar-2">
+                <div class="num-lugar">2º</div>
+                <div>
+                  <div class="monto">$3,000 MXN</div>
+                  <div class="cupon">+ cupón de <span class="valor">$650</span> de descuento en seguro de auto*</div>
+                </div>
+              </div>
+              <div class="tarjeta lugar-3">
+                <div class="num-lugar">3º</div>
+                <div>
+                  <div class="monto">$1,000 MXN</div>
+                  <div class="cupon">+ cupón de <span class="valor">$550</span> de descuento en seguro de auto*</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="resto">Del 4º al 30º lugar: cupón de <span class="valor">$500</span> de descuento en seguro de auto*</div>
+
+            <p class="legal"><strong>*</strong> Póliza de cobertura amplia, sólo pago anual sin importar que hubiera meses sin intereses, prima total mínima de $8,000, acreditable a la tarjeta bancaria cuyo titular debe ser el ganador con la cual se haya hecho el pago una vez aplicado en el sistema de la aseguradora, emitida solamente a través del agente José Luis Castillo Lara o Enrique Castillo de la Campa en cualquiera de estas aseguradoras pero ninguna otra: GNP, Latinoamericana, ANA, Qualitas, BX+, Atlas y CHUBB. El comprobante de transferencia electrónica o depósito bancario obrará como prueba plena de la entrega del premio. La vigencia del cupón termina el 31 de julio de 2027, en la que debe estar emitida y pagada la póliza.</p>
           </div>
         </div>
 
@@ -1271,6 +1383,10 @@
     <button type="button" class="nav-item" data-target="vista-reglas">
       <span class="nav-icon">📜</span>
       <span>Reglas</span>
+    </button>
+    <button type="button" class="nav-item" data-target="vista-premios">
+      <span class="nav-icon">🏆</span>
+      <span>Premios</span>
     </button>
   </nav>
 
