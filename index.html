@@ -1825,7 +1825,7 @@
                 '<th style="text-align:center">Pts</th>' +
                 '</tr></thead><tbody>';
 
-              filas.slice().reverse().forEach(function(f){
+              filas.forEach(function(f){
                 var rowClass = f.correcto ? 'correcto' : '';
                 var tag = f.correcto ? '<span class="tag-correcto">✓ Correcto</span>'
                   : '<span class="tag-fallo">—</span>';
