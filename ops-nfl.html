@@ -67,6 +67,15 @@
   }
   .btn-fantasma:hover:not(:disabled){ color: var(--text); border-color: var(--text-2); }
 
+  .sugerencias-wrap{ display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .sugerencia-item{
+    background: var(--panel-2); border: 1px solid rgba(0,192,107,0.35); border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .sugerencia-marcador{
+    font-family: 'Anton', sans-serif; font-size: 22px; color: var(--green-light); margin: 6px 0 10px;
+  }
+
   .lista-partidos{ display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
   .partido-item{
     background: var(--panel-2); border: 1px solid var(--border-2); border-radius: 8px;
@@ -223,6 +232,8 @@
 
     <div class="card">
       <h2>Partidos pendientes de resultado</h2>
+      <button class="btn btn-fantasma" id="btnBuscarMarcadores" style="margin-bottom:14px">Buscar marcadores automáticos</button>
+      <div id="sugerenciasMarcadores"></div>
       <div id="listaPartidos"><div class="loading">Cargando partidos...</div></div>
     </div>
 
@@ -332,11 +343,12 @@
   // --- Rellenar con las URLs reales despues de desplegar cada función ---
   // Tenant por hash de URL (#demo, #dabo, etc), mismo patrón que
   // index.html. Sin hash, cae en "dabo" para no romper el uso diario.
-  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
+  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
   var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
   var URL_GET_PARTIDOS = BASE_URL + 'getPartidosNFL';
   var URL_PREVISUALIZAR = BASE_URL + 'previsualizarResultadoNFL';
   var URL_CONFIRMAR = BASE_URL + 'confirmarResultadoNFL';
+  var URL_SUGERIR = BASE_URL + 'sugerirResultadosNFL';
   var URL_ADMIN_PARTICIPANTES = BASE_URL + 'adminParticipantesNFL';
   var URL_ADMIN_PAGO = BASE_URL + 'adminPagoNFL';
   var URL_ADMIN_NOMBRE = BASE_URL + 'adminNombreNFL';
@@ -347,6 +359,7 @@
   var adminSecret = sessionStorage.getItem(CLAVE_SESION) || '';
   var partidoSeleccionado = null;
   var previewActual = null; // { partidoId, golesLocal, golesVisitante }
+  var partidosPendientesActuales = []; // ultimo listado cargado por cargarPartidos()
 
   function textoPick(pick){
     return {L: 'Local', E: 'Empate', V: 'Visitante'}[pick] || pick;
@@ -444,6 +457,7 @@
         var pendientes = (data.partidos || []).filter(function(p){
           return !p.resultadoCapturado && p.local && p.visitante;
         });
+        partidosPendientesActuales = pendientes;
         if (!pendientes.length){
           cont.innerHTML = '<div class="empty-state">No hay partidos con equipos definidos y sin resultado todavía.</div>';
           return;
@@ -464,6 +478,60 @@
       })
       .catch(function(){ cont.innerHTML = '<div class="empty-state">No se pudo conectar con el servidor.</div>'; });
   }
+
+  document.getElementById('btnBuscarMarcadores').addEventListener('click', function(){
+    var btn = this;
+    var cont = document.getElementById('sugerenciasMarcadores');
+    btn.disabled = true; btn.textContent = 'Buscando...';
+    cont.innerHTML = '<div class="loading">Consultando ESPN...</div>';
+
+    fetch(URL_SUGERIR, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({adminSecret: adminSecret, slug: SLUG_TENANT})
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        btn.disabled = false; btn.textContent = 'Buscar marcadores automáticos';
+        if (manejarNoAutorizado(data)){ cont.innerHTML = ''; return; }
+        if (!data.ok){ cont.innerHTML = ''; toast(data.error || 'Error al buscar marcadores', 'err'); return; }
+        var sugerencias = data.sugerencias || [];
+        if (!sugerencias.length){
+          cont.innerHTML = '<div class="empty-state">Sin marcadores nuevos por ahora.</div>';
+          return;
+        }
+        cont.innerHTML = '<div class="sugerencias-wrap">' + sugerencias.map(function(s){
+          return '<div class="sugerencia-item" data-id="' + s.partidoId + '">' +
+            '<div class="partido-meta">' + s.fase + '</div>' +
+            '<div class="partido-equipos">' + s.visitante + ' @ ' + s.local + '</div>' +
+            '<div class="sugerencia-marcador">' + s.golesVisitante + ' - ' + s.golesLocal + '</div>' +
+            '<button class="btn btn-verde btn-usar-sugerencia">Revisar y confirmar</button>' +
+          '</div>';
+        }).join('') + '</div>';
+
+        cont.querySelectorAll('.btn-usar-sugerencia').forEach(function(btnUsar){
+          btnUsar.addEventListener('click', function(){
+            var item = btnUsar.closest('.sugerencia-item');
+            var id = item.dataset.id;
+            var s = sugerencias.find(function(x){ return x.partidoId === id; });
+            var partido = partidosPendientesActuales.find(function(p){ return p.id === id; });
+            var el = document.querySelector('.partido-item[data-id="' + id + '"]');
+            if (!partido || !el){
+              toast('Ese partido ya no está en la lista, recarga la página', 'err');
+              return;
+            }
+            seleccionarPartido(partido, el);
+            document.getElementById('golesLocal').value = s.golesLocal;
+            document.getElementById('golesVisitante').value = s.golesVisitante;
+          });
+        });
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'Buscar marcadores automáticos';
+        cont.innerHTML = '';
+        toast('Error de conexión', 'err');
+      });
+  });
 
   function seleccionarPartido(partido, el){
     partidoSeleccionado = partido;
