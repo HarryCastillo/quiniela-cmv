@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ops — Dabo</title>
+<title>Ops — Quiniela NFL</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,7 +201,7 @@
 </head>
 <body>
 <div class="wrap">
-  <p class="eyebrow">Dabo · Panel interno</p>
+  <p class="eyebrow" id="eyebrowTenant">Panel interno</p>
   <h1>Capturar resultados</h1>
 
   <!-- Compuerta de acceso -->
@@ -344,6 +344,8 @@
   // Tenant por hash de URL (#demo, #dabo, etc), mismo patrón que
   // index.html. Sin hash, cae en "dabo" para no romper el uso diario.
   var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
+  document.title = 'Ops — ' + SLUG_TENANT;
+  document.getElementById('eyebrowTenant').textContent = SLUG_TENANT.toUpperCase() + ' · Panel interno';
   var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
   var URL_GET_PARTIDOS = BASE_URL + 'getPartidosNFL';
   var URL_PREVISUALIZAR = BASE_URL + 'previsualizarResultadoNFL';
