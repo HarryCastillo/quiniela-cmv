@@ -341,9 +341,10 @@
 <script>
 (function(){
   // --- Rellenar con las URLs reales despues de desplegar cada función ---
-  // Tenant por hash de URL (#demo, #dabo, etc), mismo patrón que
-  // index.html. Sin hash, cae en "dabo" para no romper el uso diario.
-  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'dabo';
+  // Tenant por hash de URL (#cmv, #demo, etc), mismo patrón que
+  // index.html. Sin hash, cae en "cmv" (cliente real en producción) para
+  // no operar por accidente sobre el tenant de pruebas "dabo".
+  var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
   document.title = 'Ops — ' + SLUG_TENANT;
   document.getElementById('eyebrowTenant').textContent = SLUG_TENANT.toUpperCase() + ' · Panel interno';
   var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
