@@ -360,6 +360,7 @@
   var partidoSeleccionado = null;
   var previewActual = null; // { partidoId, golesLocal, golesVisitante }
   var partidosPendientesActuales = []; // ultimo listado cargado por cargarPartidos()
+  var sugerenciasActuales = []; // ultimas sugerencias de ESPN, podadas contra partidosPendientesActuales
 
   function textoPick(pick){
     return {L: 'Local', E: 'Empate', V: 'Visitante'}[pick] || pick;
@@ -458,6 +459,11 @@
           return !p.resultadoCapturado && p.local && p.visitante;
         });
         partidosPendientesActuales = pendientes;
+        // Poda silenciosa: cualquier tarjeta de sugerencia de un partido
+        // que ya no siga pendiente (porque se confirmo por la via normal,
+        // aqui o en otra pestaña) desaparece sola, sin que haga falta
+        // volver a darle "Buscar marcadores automáticos".
+        renderSugerencias(false);
         if (!pendientes.length){
           cont.innerHTML = '<div class="empty-state">No hay partidos con equipos definidos y sin resultado todavía.</div>';
           return;
@@ -479,6 +485,56 @@
       .catch(function(){ cont.innerHTML = '<div class="empty-state">No se pudo conectar con el servidor.</div>'; });
   }
 
+  // Pinta el panel de sugerencias a partir de sugerenciasActuales, pero
+  // primero lo poda contra partidosPendientesActuales: una sugerencia de
+  // un partido que ya no esta pendiente (ya se confirmo, por la via que
+  // haya sido) se descarta antes de dibujar nada, para nunca mostrar un
+  // marcador de un partido ya cargado.
+  // @param {boolean} mostrarVacio Si true, y no queda ninguna sugerencia
+  //   vigente, pinta el mensaje "sin marcadores nuevos". Si false, un
+  //   resultado vacio tras podar simplemente deja el panel en blanco sin
+  //   mensaje (caso de una recarga de fondo, no de una busqueda explicita).
+  function renderSugerencias(mostrarVacio){
+    var cont = document.getElementById('sugerenciasMarcadores');
+    var idsPendientes = {};
+    partidosPendientesActuales.forEach(function(p){ idsPendientes[p.id] = true; });
+    sugerenciasActuales = sugerenciasActuales.filter(function(s){
+      return !!idsPendientes[s.partidoId];
+    });
+
+    if (!sugerenciasActuales.length){
+      cont.innerHTML = mostrarVacio ?
+        '<div class="empty-state">Sin marcadores nuevos por ahora.</div>' : '';
+      return;
+    }
+
+    cont.innerHTML = '<div class="sugerencias-wrap">' + sugerenciasActuales.map(function(s){
+      return '<div class="sugerencia-item" data-id="' + s.partidoId + '">' +
+        '<div class="partido-meta">' + s.fase + '</div>' +
+        '<div class="partido-equipos">' + s.visitante + ' @ ' + s.local + '</div>' +
+        '<div class="sugerencia-marcador">' + s.golesVisitante + ' - ' + s.golesLocal + '</div>' +
+        '<button class="btn btn-verde btn-usar-sugerencia">Revisar y confirmar</button>' +
+      '</div>';
+    }).join('') + '</div>';
+
+    cont.querySelectorAll('.btn-usar-sugerencia').forEach(function(btnUsar){
+      btnUsar.addEventListener('click', function(){
+        var item = btnUsar.closest('.sugerencia-item');
+        var id = item.dataset.id;
+        var s = sugerenciasActuales.find(function(x){ return x.partidoId === id; });
+        var partido = partidosPendientesActuales.find(function(p){ return p.id === id; });
+        var el = document.querySelector('.partido-item[data-id="' + id + '"]');
+        if (!partido || !el){
+          toast('Ese partido ya no está en la lista, recarga la página', 'err');
+          return;
+        }
+        seleccionarPartido(partido, el);
+        document.getElementById('golesLocal').value = s.golesLocal;
+        document.getElementById('golesVisitante').value = s.golesVisitante;
+      });
+    });
+  }
+
   document.getElementById('btnBuscarMarcadores').addEventListener('click', function(){
     var btn = this;
     var cont = document.getElementById('sugerenciasMarcadores');
@@ -495,36 +551,8 @@
         btn.disabled = false; btn.textContent = 'Buscar marcadores automáticos';
         if (manejarNoAutorizado(data)){ cont.innerHTML = ''; return; }
         if (!data.ok){ cont.innerHTML = ''; toast(data.error || 'Error al buscar marcadores', 'err'); return; }
-        var sugerencias = data.sugerencias || [];
-        if (!sugerencias.length){
-          cont.innerHTML = '<div class="empty-state">Sin marcadores nuevos por ahora.</div>';
-          return;
-        }
-        cont.innerHTML = '<div class="sugerencias-wrap">' + sugerencias.map(function(s){
-          return '<div class="sugerencia-item" data-id="' + s.partidoId + '">' +
-            '<div class="partido-meta">' + s.fase + '</div>' +
-            '<div class="partido-equipos">' + s.visitante + ' @ ' + s.local + '</div>' +
-            '<div class="sugerencia-marcador">' + s.golesVisitante + ' - ' + s.golesLocal + '</div>' +
-            '<button class="btn btn-verde btn-usar-sugerencia">Revisar y confirmar</button>' +
-          '</div>';
-        }).join('') + '</div>';
-
-        cont.querySelectorAll('.btn-usar-sugerencia').forEach(function(btnUsar){
-          btnUsar.addEventListener('click', function(){
-            var item = btnUsar.closest('.sugerencia-item');
-            var id = item.dataset.id;
-            var s = sugerencias.find(function(x){ return x.partidoId === id; });
-            var partido = partidosPendientesActuales.find(function(p){ return p.id === id; });
-            var el = document.querySelector('.partido-item[data-id="' + id + '"]');
-            if (!partido || !el){
-              toast('Ese partido ya no está en la lista, recarga la página', 'err');
-              return;
-            }
-            seleccionarPartido(partido, el);
-            document.getElementById('golesLocal').value = s.golesLocal;
-            document.getElementById('golesVisitante').value = s.golesVisitante;
-          });
-        });
+        sugerenciasActuales = data.sugerencias || [];
+        renderSugerencias(true);
       })
       .catch(function(){
         btn.disabled = false; btn.textContent = 'Buscar marcadores automáticos';
