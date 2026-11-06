@@ -283,7 +283,7 @@
 (function(){
   // Versión del panel: se cambia en cada entrega (fecha + letra) para
   // poder identificar de un vistazo qué archivo está publicado.
-  var VERSION_OPS = 'v2026-11-05a';
+  var VERSION_OPS = 'v2026-11-06a';
 
   // --- Rellenar con las URLs reales despues de desplegar cada función ---
   // Tenant por hash de URL (#cmv, #demo, etc), mismo patrón que
@@ -420,9 +420,13 @@
     }
 
     cont.innerHTML = '<div class="sugerencias-wrap">' + sugerenciasActuales.map(function(s){
+      // Mismo criterio que index.html: temporada regular muestra
+      // "Semana N"; playoffs (sin jornada) muestran la fase. Si el
+      // backend aun no manda jornada, cae a la fase.
+      var faseTexto = s.jornada ? 'Semana ' + s.jornada : s.fase;
       return '<div class="sugerencia-item" data-id="' + esc(s.partidoId) + '">' +
         '<div class="sugerencia-info">' +
-          '<div class="partido-meta">' + esc(s.fase) + '</div>' +
+          '<div class="partido-meta">' + esc(faseTexto) + '</div>' +
           '<div class="equipo-fila"><span><span class="rol">Visitante</span>' + esc(s.visitante) + '</span>' +
             '<span class="pts">' + esc(s.golesVisitante) + '</span></div>' +
           '<div class="equipo-fila"><span><span class="rol">Local</span>' + esc(s.local) + '</span>' +
