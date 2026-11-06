@@ -51,7 +51,6 @@
     padding: 10px 12px; border-radius: 8px; outline: none;
   }
   .campo input:focus, .campo select:focus{ border-color: var(--green); }
-  .fila-2{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .btn{
     font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.05em;
     text-transform: uppercase; border: none; border-radius: 8px; padding: 12px 20px;
@@ -67,60 +66,37 @@
   }
   .btn-fantasma:hover:not(:disabled){ color: var(--text); border-color: var(--text-2); }
 
-  .sugerencias-wrap{ display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  /* ── Resultados pendientes (casillas + aplicar en lote) ── */
+  .sugerencias-wrap{ display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
   .sugerencia-item{
-    background: var(--panel-2); border: 1px solid rgba(0,192,107,0.35); border-radius: 8px;
-    padding: 12px 14px;
-  }
-  .sugerencia-marcador{
-    font-family: 'Anton', sans-serif; font-size: 22px; color: var(--green-light); margin: 6px 0 10px;
-  }
-
-  .lista-partidos{ display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
-  .partido-item{
+    display: flex; align-items: center; gap: 14px;
     background: var(--panel-2); border: 1px solid var(--border-2); border-radius: 8px;
-    padding: 12px 14px; cursor: pointer; transition: border-color 0.15s ease;
+    padding: 12px 14px; transition: border-color 0.15s ease, background 0.15s ease;
   }
-  .partido-item:hover{ border-color: var(--green); }
-  .partido-item.selected{ border-color: var(--green); background: rgba(0,192,107,0.06); }
+  .sugerencia-item.marcado{ border-color: var(--green); background: rgba(0,192,107,0.06); }
+  .sugerencia-info{ flex: 1; min-width: 0; }
   .partido-meta{ font-size: 11px; color: var(--text-3); font-family: 'Space Mono', monospace; margin-bottom: 4px; }
-  .partido-equipos{ font-size: 14px; font-weight: 600; }
-
-  .seleccionado-banner{
-    background: rgba(0,192,107,0.06); border: 1px solid rgba(0,192,107,0.3);
-    border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+  .equipo-fila{
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    font-size: 14px; font-weight: 600; margin-top: 4px;
   }
-  .seleccionado-banner strong{ color: var(--green-light); }
+  .equipo-fila .pts{ font-family: 'Anton', sans-serif; font-weight: 400; font-size: 22px; color: var(--green-light); }
+  .equipo-fila .rol{ font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 400; color: var(--text-3); text-transform: uppercase; margin-right: 6px; }
+  .chk-resultado{ width: 28px; height: 28px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; }
+  .zona-aplicar{ margin-top: 6px; }
+
+  .mensaje{
+    font-family: 'Space Mono', monospace; font-size: 13px; padding: 10px 14px;
+    border-radius: 8px; margin-top: 10px; display: none; white-space: pre-line;
+  }
+  .mensaje.error{ display: block; background: rgba(230,51,41,0.1); border: 1px solid var(--error); color: #ff8079; }
+  .mensaje.exito{ display: block; background: rgba(0,192,107,0.1); border: 1px solid var(--green); color: var(--green-light); }
 
   .banner-sin-pago{
     background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.35);
     border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; font-size: 13px;
     color: var(--gold);
   }
-
-  table{ width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
-  th{
-    text-align: left; padding: 8px 10px; color: var(--text-3); font-weight: 500;
-    border-bottom: 1px solid var(--border-1); font-family: 'Space Mono', monospace;
-    font-size: 11px; text-transform: uppercase;
-  }
-  td{ padding: 9px 10px; border-bottom: 1px solid var(--border-2); }
-  .tag-correcto{ background: rgba(72,199,142,0.2); color: var(--green-light); border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 600; }
-  .tag-fallo{ color: var(--text-3); font-size: 11px; }
-  .resumen-stats{ display: flex; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
-  .resumen-stat{ background: var(--panel-2); border-radius: 8px; padding: 8px 14px; font-size: 12px; color: var(--text-3); }
-  .resumen-stat strong{ display: block; font-family: 'Anton', sans-serif; font-size: 20px; color: var(--green-light); }
-
-  .aviso-irreversible{
-    background: rgba(230,51,41,0.08); border: 1px solid rgba(230,51,41,0.3);
-    border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--text-2);
-    margin-top: 14px; line-height: 1.5;
-  }
-  .aviso-irreversible strong{ color: var(--error); }
-
-  .mensaje{ font-family: 'Space Mono', monospace; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
-  .mensaje.error{ display: block; background: rgba(230,51,41,0.1); border: 1px solid var(--error); color: #ff8079; }
-  .mensaje.exito{ display: block; background: rgba(0,192,107,0.1); border: 1px solid var(--green); color: var(--green-light); }
 
   .oculto{ display: none !important; }
   .empty-state{ text-align: center; padding: 32px 16px; color: var(--text-3); font-size: 13px; }
@@ -219,7 +195,7 @@
   <div id="panelPrincipal" class="oculto">
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-      <span style="opacity:.65;font-size:13px">Tenant activo: <strong id="tenantActual"></strong></span>
+      <span style="opacity:.65;font-size:13px">Tenant activo: <strong id="tenantActual"></strong> · Versión <strong id="versionOps"></strong></span>
       <button class="btn btn-fantasma" id="btnSalir">Salir</button>
     </div>
 
@@ -231,48 +207,13 @@
     <div id="sec-resultados" class="admin-sec visible">
 
     <div class="card">
-      <h2>Partidos pendientes de resultado</h2>
-      <button class="btn btn-fantasma" id="btnBuscarMarcadores" style="margin-bottom:14px">Buscar marcadores automáticos</button>
+      <h2>Resultados pendientes</h2>
+      <button class="btn btn-fantasma" id="btnBuscarMarcadores">Buscar resultados pendientes</button>
+      <div class="mensaje" id="mensajeLote"></div>
       <div id="sugerenciasMarcadores"></div>
-      <div id="listaPartidos"><div class="loading">Cargando partidos...</div></div>
-    </div>
-
-    <div class="card oculto" id="cardCaptura">
-      <h2>Capturar resultado</h2>
-      <div class="seleccionado-banner" id="bannerSeleccionado"></div>
-      <div class="fila-2">
-        <div class="campo">
-          <label id="labelVisitante">Puntos visitante</label>
-          <input type="number" id="golesVisitante" min="0" max="99" placeholder="0">
-        </div>
-        <div class="campo">
-          <label id="labelLocal">Puntos local</label>
-          <input type="number" id="golesLocal" min="0" max="99" placeholder="0">
-        </div>
+      <div class="zona-aplicar oculto" id="zonaAplicar">
+        <button class="btn btn-dorado" id="btnAplicarLote" disabled>Aplicar marcados (0)</button>
       </div>
-      <button class="btn btn-verde" id="btnPrevisualizar">Previsualizar puntos</button>
-      <button class="btn btn-fantasma" id="btnCancelarSeleccion" style="margin-left:8px">Cancelar</button>
-      <div class="mensaje" id="mensajeCaptura"></div>
-    </div>
-
-    <div class="card oculto" id="cardPreview">
-      <h2>Previsualización — nada se ha aplicado todavía</h2>
-      <div id="resumenPreview"></div>
-      <div style="max-height:280px;overflow-y:auto">
-        <table>
-          <thead><tr><th>Participante</th><th>Pronóstico</th><th>Resultado</th><th>Pts</th></tr></thead>
-          <tbody id="tablaPreview"></tbody>
-        </table>
-      </div>
-      <div class="aviso-irreversible">
-        <strong>Esto es irreversible.</strong> Al confirmar se suman los puntos a cada participante
-        y el partido queda marcado como cerrado. Revisa el resultado con cuidado antes de aplicar.
-      </div>
-      <div style="margin-top:14px">
-        <button class="btn btn-dorado" id="btnConfirmar">Confirmar y aplicar</button>
-        <button class="btn btn-fantasma" id="btnDescartarPreview" style="margin-left:8px">Descartar</button>
-      </div>
-      <div class="mensaje" id="mensajeConfirmar"></div>
     </div>
 
     </div><!-- /sec-resultados -->
@@ -340,18 +281,22 @@
 
 <script>
 (function(){
+  // Versión del panel: se cambia en cada entrega (fecha + letra) para
+  // poder identificar de un vistazo qué archivo está publicado.
+  var VERSION_OPS = 'v2026-11-05a';
+
   // --- Rellenar con las URLs reales despues de desplegar cada función ---
   // Tenant por hash de URL (#cmv, #demo, etc), mismo patrón que
   // index.html. Sin hash, cae en "cmv" (cliente real en producción) para
   // no operar por accidente sobre el tenant de pruebas "dabo".
   var SLUG_TENANT = (window.location.hash || '').replace('#', '').trim() || 'cmv';
   document.title = 'Ops — ' + SLUG_TENANT;
-  document.getElementById('eyebrowTenant').textContent = SLUG_TENANT.toUpperCase() + ' · Panel interno';
+  document.getElementById('eyebrowTenant').textContent =
+    SLUG_TENANT.toUpperCase() + ' · Panel interno · ' + VERSION_OPS;
+  document.getElementById('versionOps').textContent = VERSION_OPS;
   var BASE_URL = 'https://us-central1-quiniela-futbol-americano.cloudfunctions.net/';
-  var URL_GET_PARTIDOS = BASE_URL + 'getPartidosNFL';
-  var URL_PREVISUALIZAR = BASE_URL + 'previsualizarResultadoNFL';
-  var URL_CONFIRMAR = BASE_URL + 'confirmarResultadoNFL';
   var URL_SUGERIR = BASE_URL + 'sugerirResultadosNFL';
+  var URL_LOTE = BASE_URL + 'confirmarResultadosLoteNFL';
   var URL_ADMIN_PARTICIPANTES = BASE_URL + 'adminParticipantesNFL';
   var URL_ADMIN_PAGO = BASE_URL + 'adminPagoNFL';
   var URL_ADMIN_NOMBRE = BASE_URL + 'adminNombreNFL';
@@ -360,13 +305,13 @@
   var CLAVE_SESION = 'ops_dabo_admin_secret';
 
   var adminSecret = sessionStorage.getItem(CLAVE_SESION) || '';
-  var partidoSeleccionado = null;
-  var previewActual = null; // { partidoId, golesLocal, golesVisitante }
-  var partidosPendientesActuales = []; // ultimo listado cargado por cargarPartidos()
-  var sugerenciasActuales = []; // ultimas sugerencias de ESPN, podadas contra partidosPendientesActuales
+  var sugerenciasActuales = []; // ultimos resultados encontrados en ESPN
+  var aplicando = false;
 
-  function textoPick(pick){
-    return {L: 'Local', E: 'Empate', V: 'Visitante'}[pick] || pick;
+  function esc(t){
+    return String(t == null ? '' : t)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   function mostrarMensaje(id, texto, tipo){
@@ -392,6 +337,9 @@
   document.getElementById('btnSalir').addEventListener('click', function(){
     sessionStorage.removeItem(CLAVE_SESION);
     adminSecret = '';
+    sugerenciasActuales = [];
+    renderSugerencias(false);
+    limpiarMensaje('mensajeLote');
     document.getElementById('adminSecret').value = '';
     document.getElementById('panelPrincipal').classList.add('oculto');
     document.getElementById('card-acceso').classList.remove('oculto');
@@ -402,7 +350,6 @@
     document.getElementById('tenantActual').textContent = SLUG_TENANT;
     document.getElementById('card-acceso').classList.add('oculto');
     document.getElementById('panelPrincipal').classList.remove('oculto');
-    cargarPartidos();
   }
 
   // --- Navegación de pestañas ---
@@ -438,110 +385,69 @@
     return false;
   }
 
-  function nombrePartido(p){
-    var local = p.local || 'Por definir';
-    var visitante = p.visitante || 'Por definir';
-    return visitante + ' @ ' + local;
+  // =====================================================================
+  // Pestaña Resultados: buscar, marcar y aplicar en lote
+  // =====================================================================
+
+  // Actualiza el contador y el estado del botón "Aplicar marcados" según
+  // las casillas marcadas, y resalta las filas marcadas.
+  function actualizarBotonAplicar(){
+    var cont = document.getElementById('sugerenciasMarcadores');
+    var marcadas = 0;
+    cont.querySelectorAll('.sugerencia-item').forEach(function(item){
+      var chk = item.querySelector('.chk-resultado');
+      if (chk.checked){ marcadas++; item.classList.add('marcado'); }
+      else { item.classList.remove('marcado'); }
+    });
+    var btn = document.getElementById('btnAplicarLote');
+    btn.textContent = aplicando ? 'Aplicando...' : 'Aplicar marcados (' + marcadas + ')';
+    btn.disabled = aplicando || marcadas === 0;
   }
 
-  function metaPartido(p){
-    var partes = [p.fase];
-    if (p.jornada) partes.push('Semana ' + p.jornada);
-    if (p.ronda) partes.push(p.ronda);
-    return partes.join(' · ');
-  }
-
-  function cargarPartidos(){
-    var cont = document.getElementById('listaPartidos');
-    cont.innerHTML = '<div class="loading">Cargando partidos...</div>';
-    fetch(URL_GET_PARTIDOS + '?slug=' + encodeURIComponent(SLUG_TENANT))
-      .then(function(r){ return r.json(); })
-      .then(function(data){
-        if (!data.ok){ cont.innerHTML = '<div class="empty-state">Error al cargar partidos.</div>'; return; }
-        var pendientes = (data.partidos || []).filter(function(p){
-          return !p.resultadoCapturado && p.local && p.visitante;
-        });
-        partidosPendientesActuales = pendientes;
-        // Poda silenciosa: cualquier tarjeta de sugerencia de un partido
-        // que ya no siga pendiente (porque se confirmo por la via normal,
-        // aqui o en otra pestaña) desaparece sola, sin que haga falta
-        // volver a darle "Buscar marcadores automáticos".
-        renderSugerencias(false);
-        if (!pendientes.length){
-          cont.innerHTML = '<div class="empty-state">No hay partidos con equipos definidos y sin resultado todavía.</div>';
-          return;
-        }
-        cont.innerHTML = '<div class="lista-partidos">' + pendientes.map(function(p){
-          return '<div class="partido-item" data-id="' + p.id + '">' +
-            '<div class="partido-meta">' + metaPartido(p) + '</div>' +
-            '<div class="partido-equipos">' + nombrePartido(p) + '</div>' +
-          '</div>';
-        }).join('') + '</div>';
-
-        document.querySelectorAll('.partido-item').forEach(function(el){
-          el.addEventListener('click', function(){
-            var partido = pendientes.find(function(p){ return p.id === el.dataset.id; });
-            seleccionarPartido(partido, el);
-          });
-        });
-      })
-      .catch(function(){ cont.innerHTML = '<div class="empty-state">No se pudo conectar con el servidor.</div>'; });
-  }
-
-  // Pinta el panel de sugerencias a partir de sugerenciasActuales, pero
-  // primero lo poda contra partidosPendientesActuales: una sugerencia de
-  // un partido que ya no esta pendiente (ya se confirmo, por la via que
-  // haya sido) se descarta antes de dibujar nada, para nunca mostrar un
-  // marcador de un partido ya cargado.
-  // @param {boolean} mostrarVacio Si true, y no queda ninguna sugerencia
-  //   vigente, pinta el mensaje "sin marcadores nuevos". Si false, un
-  //   resultado vacio tras podar simplemente deja el panel en blanco sin
-  //   mensaje (caso de una recarga de fondo, no de una busqueda explicita).
+  // Pinta las filas de resultados encontrados, cada una con su casilla
+  // (siempre desmarcada al pintar) y el botón de aplicar al final.
+  // @param {boolean} mostrarVacio Si true y no hay resultados, pinta el
+  //   mensaje "sin resultados nuevos".
   function renderSugerencias(mostrarVacio){
     var cont = document.getElementById('sugerenciasMarcadores');
-    var idsPendientes = {};
-    partidosPendientesActuales.forEach(function(p){ idsPendientes[p.id] = true; });
-    sugerenciasActuales = sugerenciasActuales.filter(function(s){
-      return !!idsPendientes[s.partidoId];
-    });
+    var zona = document.getElementById('zonaAplicar');
 
     if (!sugerenciasActuales.length){
       cont.innerHTML = mostrarVacio ?
-        '<div class="empty-state">Sin marcadores nuevos por ahora.</div>' : '';
+        '<div class="empty-state">Sin resultados nuevos por ahora.</div>' : '';
+      zona.classList.add('oculto');
       return;
     }
 
     cont.innerHTML = '<div class="sugerencias-wrap">' + sugerenciasActuales.map(function(s){
-      return '<div class="sugerencia-item" data-id="' + s.partidoId + '">' +
-        '<div class="partido-meta">' + s.fase + '</div>' +
-        '<div class="partido-equipos">' + s.visitante + ' @ ' + s.local + '</div>' +
-        '<div class="sugerencia-marcador">' + s.golesVisitante + ' - ' + s.golesLocal + '</div>' +
-        '<button class="btn btn-verde btn-usar-sugerencia">Revisar y confirmar</button>' +
+      return '<div class="sugerencia-item" data-id="' + esc(s.partidoId) + '">' +
+        '<div class="sugerencia-info">' +
+          '<div class="partido-meta">' + esc(s.fase) + '</div>' +
+          '<div class="equipo-fila"><span><span class="rol">Visitante</span>' + esc(s.visitante) + '</span>' +
+            '<span class="pts">' + esc(s.golesVisitante) + '</span></div>' +
+          '<div class="equipo-fila"><span><span class="rol">Local</span>' + esc(s.local) + '</span>' +
+            '<span class="pts">' + esc(s.golesLocal) + '</span></div>' +
+        '</div>' +
+        '<input type="checkbox" class="chk-resultado" aria-label="De acuerdo con este marcador">' +
       '</div>';
     }).join('') + '</div>';
 
-    cont.querySelectorAll('.btn-usar-sugerencia').forEach(function(btnUsar){
-      btnUsar.addEventListener('click', function(){
-        var item = btnUsar.closest('.sugerencia-item');
-        var id = item.dataset.id;
-        var s = sugerenciasActuales.find(function(x){ return x.partidoId === id; });
-        var partido = partidosPendientesActuales.find(function(p){ return p.id === id; });
-        var el = document.querySelector('.partido-item[data-id="' + id + '"]');
-        if (!partido || !el){
-          toast('Ese partido ya no está en la lista, recarga la página', 'err');
-          return;
-        }
-        seleccionarPartido(partido, el);
-        document.getElementById('golesLocal').value = s.golesLocal;
-        document.getElementById('golesVisitante').value = s.golesVisitante;
-      });
+    cont.querySelectorAll('.chk-resultado').forEach(function(chk){
+      chk.addEventListener('change', actualizarBotonAplicar);
     });
+    zona.classList.remove('oculto');
+    actualizarBotonAplicar();
   }
 
-  document.getElementById('btnBuscarMarcadores').addEventListener('click', function(){
-    var btn = this;
+  // Consulta ESPN (via sugerirResultadosNFL) y pinta los resultados.
+  // @param {boolean} conservarMensaje Si true, no borra el resumen de la
+  //   última aplicación (se usa al refrescar la lista tras aplicar).
+  function buscarResultados(conservarMensaje){
+    var btn = document.getElementById('btnBuscarMarcadores');
     var cont = document.getElementById('sugerenciasMarcadores');
     btn.disabled = true; btn.textContent = 'Buscando...';
+    if (!conservarMensaje) limpiarMensaje('mensajeLote');
+    document.getElementById('zonaAplicar').classList.add('oculto');
     cont.innerHTML = '<div class="loading">Consultando ESPN...</div>';
 
     fetch(URL_SUGERIR, {
@@ -551,135 +457,73 @@
     })
       .then(function(r){ return r.json(); })
       .then(function(data){
-        btn.disabled = false; btn.textContent = 'Buscar marcadores automáticos';
+        btn.disabled = false; btn.textContent = 'Buscar resultados pendientes';
         if (manejarNoAutorizado(data)){ cont.innerHTML = ''; return; }
-        if (!data.ok){ cont.innerHTML = ''; toast(data.error || 'Error al buscar marcadores', 'err'); return; }
+        if (!data.ok){ cont.innerHTML = ''; toast(data.error || 'Error al buscar resultados', 'err'); return; }
         sugerenciasActuales = data.sugerencias || [];
         renderSugerencias(true);
       })
       .catch(function(){
-        btn.disabled = false; btn.textContent = 'Buscar marcadores automáticos';
+        btn.disabled = false; btn.textContent = 'Buscar resultados pendientes';
         cont.innerHTML = '';
         toast('Error de conexión', 'err');
       });
-  });
-
-  function seleccionarPartido(partido, el){
-    partidoSeleccionado = partido;
-    document.querySelectorAll('.partido-item').forEach(function(e){ e.classList.remove('selected'); });
-    el.classList.add('selected');
-
-    document.getElementById('cardCaptura').classList.remove('oculto');
-    document.getElementById('cardPreview').classList.add('oculto');
-    document.getElementById('bannerSeleccionado').innerHTML =
-      '<strong>' + nombrePartido(partido) + '</strong> — ' + metaPartido(partido);
-    document.getElementById('labelLocal').textContent = 'Puntos ' + (partido.local || 'local');
-    document.getElementById('labelVisitante').textContent = 'Puntos ' + (partido.visitante || 'visitante');
-    document.getElementById('golesLocal').value = '';
-    document.getElementById('golesVisitante').value = '';
-    limpiarMensaje('mensajeCaptura');
-    document.getElementById('cardCaptura').scrollIntoView({behavior:'smooth', block:'center'});
   }
 
-  document.getElementById('btnCancelarSeleccion').addEventListener('click', function(){
-    partidoSeleccionado = null;
-    document.getElementById('cardCaptura').classList.add('oculto');
-    document.getElementById('cardPreview').classList.add('oculto');
-    document.querySelectorAll('.partido-item').forEach(function(e){ e.classList.remove('selected'); });
+  document.getElementById('btnBuscarMarcadores').addEventListener('click', function(){
+    buscarResultados(false);
   });
 
-  document.getElementById('btnPrevisualizar').addEventListener('click', function(){
-    limpiarMensaje('mensajeCaptura');
-    if (!partidoSeleccionado){ mostrarMensaje('mensajeCaptura', 'Selecciona un partido', 'error'); return; }
-    var gl = document.getElementById('golesLocal').value;
-    var gv = document.getElementById('golesVisitante').value;
-    if (gl === '' || gv === ''){ mostrarMensaje('mensajeCaptura', 'Ingresa el marcador completo', 'error'); return; }
+  // Aplica en lote SOLO los resultados con la casilla marcada. Sin
+  // segunda confirmación: marcar la casilla es la validación.
+  document.getElementById('btnAplicarLote').addEventListener('click', function(){
+    if (aplicando) return;
+    var cont = document.getElementById('sugerenciasMarcadores');
+    var seleccion = [];
+    var nombres = {};
+    cont.querySelectorAll('.sugerencia-item').forEach(function(item){
+      if (!item.querySelector('.chk-resultado').checked) return;
+      var id = item.dataset.id;
+      var s = sugerenciasActuales.find(function(x){ return x.partidoId === id; });
+      if (!s) return;
+      nombres[id] = s.visitante + ' @ ' + s.local;
+      seleccion.push({partidoId: s.partidoId, golesLocal: s.golesLocal, golesVisitante: s.golesVisitante});
+    });
+    if (!seleccion.length) return;
 
-    var btn = this;
-    btn.disabled = true; btn.textContent = 'Calculando...';
+    aplicando = true;
+    actualizarBotonAplicar();
+    limpiarMensaje('mensajeLote');
 
-    fetch(URL_PREVISUALIZAR, {
+    fetch(URL_LOTE, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        adminSecret: adminSecret, slug: SLUG_TENANT, partidoId: partidoSeleccionado.id,
-        golesLocal: Number(gl), golesVisitante: Number(gv)
-      })
+      body: JSON.stringify({adminSecret: adminSecret, slug: SLUG_TENANT, resultados: seleccion})
     })
       .then(function(r){ return r.json(); })
       .then(function(data){
-        btn.disabled = false; btn.textContent = 'Previsualizar puntos';
+        aplicando = false;
+        if (manejarNoAutorizado(data)){ return; }
         if (!data.ok){
-          if (String(data.error||'').indexOf('autorizado') !== -1){
-            sessionStorage.removeItem(CLAVE_SESION);
-            mostrarMensaje('mensajeCaptura', 'Secreto incorrecto. Vuelve a entrar.', 'error');
-            document.getElementById('panelPrincipal').classList.add('oculto');
-            document.getElementById('card-acceso').classList.remove('oculto');
-            return;
-          }
-          mostrarMensaje('mensajeCaptura', data.error || 'Error al previsualizar', 'error');
+          mostrarMensaje('mensajeLote', data.error || 'Error al aplicar', 'error');
+          actualizarBotonAplicar();
           return;
         }
-        previewActual = { partidoId: partidoSeleccionado.id, golesLocal: Number(gl), golesVisitante: Number(gv) };
-        mostrarPreview(data);
+        var lineas = ['Aplicados: ' + data.aplicados + ' de ' + seleccion.length + '.'];
+        if (data.yaAplicados) lineas.push('Ya estaban aplicados: ' + data.yaAplicados + '.');
+        (data.detalle || []).forEach(function(d){
+          if (d.estado === 'error'){
+            lineas.push('✗ ' + (nombres[d.partidoId] || d.partidoId) + ': ' + d.mensaje);
+          }
+        });
+        mostrarMensaje('mensajeLote', lineas.join('\n'), data.errores ? 'error' : 'exito');
+        buscarResultados(true);
       })
-      .catch(function(){ btn.disabled = false; btn.textContent = 'Previsualizar puntos'; mostrarMensaje('mensajeCaptura', 'Error de conexión', 'error'); });
-  });
-
-  function mostrarPreview(data){
-    document.getElementById('cardPreview').classList.remove('oculto');
-    limpiarMensaje('mensajeConfirmar');
-    document.getElementById('resumenPreview').innerHTML =
-      '<p style="font-size:14px;color:var(--text-2)">Resultado a capturar: <strong style="color:var(--text)">' +
-      textoPick(data.resultado) + '</strong> — ' + data.partido.visitante + ' @ ' + data.partido.local +
-      ' (' + data.partido.fase + ', ×' + data.partido.multiplicador + ')</p>' +
-      '<div class="resumen-stats">' +
-        '<div class="resumen-stat"><strong>' + data.totalPronosticos + '</strong>Pronósticos</div>' +
-        '<div class="resumen-stat"><strong>' + data.correctos + '</strong>Correctos</div>' +
-      '</div>';
-
-    document.getElementById('tablaPreview').innerHTML = data.detalle.map(function(f){
-      var tag = f.correcto ? '<span class="tag-correcto">✓ Correcto</span>'
-        : '<span class="tag-fallo">—</span>';
-      return '<tr><td>' + f.username + '</td><td>' + textoPick(f.pronostico) + '</td><td>' + tag + '</td><td>+' + f.puntos + '</td></tr>';
-    }).join('');
-
-    document.getElementById('cardPreview').scrollIntoView({behavior:'smooth', block:'center'});
-  }
-
-  document.getElementById('btnDescartarPreview').addEventListener('click', function(){
-    previewActual = null;
-    document.getElementById('cardPreview').classList.add('oculto');
-  });
-
-  document.getElementById('btnConfirmar').addEventListener('click', function(){
-    if (!previewActual){ return; }
-    var btn = this;
-    btn.disabled = true; btn.textContent = 'Aplicando...';
-    limpiarMensaje('mensajeConfirmar');
-
-    fetch(URL_CONFIRMAR, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        adminSecret: adminSecret, slug: SLUG_TENANT, confirmar: true,
-        partidoId: previewActual.partidoId,
-        golesLocal: previewActual.golesLocal, golesVisitante: previewActual.golesVisitante
-      })
-    })
-      .then(function(r){ return r.json(); })
-      .then(function(data){
-        btn.disabled = false; btn.textContent = 'Confirmar y aplicar';
-        if (!data.ok){ mostrarMensaje('mensajeConfirmar', data.error || 'Error al aplicar', 'error'); return; }
-        mostrarMensaje('mensajeConfirmar', data.mensaje, 'exito');
-        setTimeout(function(){
-          document.getElementById('cardPreview').classList.add('oculto');
-          document.getElementById('cardCaptura').classList.add('oculto');
-          previewActual = null; partidoSeleccionado = null;
-          cargarPartidos();
-        }, 1800);
-      })
-      .catch(function(){ btn.disabled = false; btn.textContent = 'Confirmar y aplicar'; mostrarMensaje('mensajeConfirmar', 'Error de conexión', 'error'); });
+      .catch(function(){
+        aplicando = false;
+        actualizarBotonAplicar();
+        mostrarMensaje('mensajeLote', 'Error de conexión. Antes de reintentar, busca de nuevo para ver qué se alcanzó a aplicar.', 'error');
+      });
   });
 
   // =====================================================================
